@@ -1,0 +1,168 @@
+syntax = "proto3";
+
+package user;
+option go_package = ".";
+
+service UserService {
+    rpc Register(RegisterRequest) returns (RegisterResponse);
+    rpc Login(LoginRequest) returns (LoginResponse);
+    rpc VerifyEmail(EmailVerificationRequest) returns (EmailVerificationResponse);
+    rpc GetProfile(GetProfileRequest) returns (GetProfileResponse);
+    rpc UpdateProfile(UpdateProfileRequest) returns (UpdateProfileResponse);
+    rpc GetUserByToken(GetUserByTokenRequest) returns (GetProfileResponse);
+    rpc CheckBan(CheckBanRequest) returns (CheckBanResponse);
+    rpc BanUser(BanUserRequest) returns (BanUserResponse);
+    rpc UnBanUser(UnBanUserRequest) returns (UnBanUserResponse);
+    rpc AddAddress(AddAddressRequest) returns (AddAddressResponse);
+    rpc GetAddresses(GetAddressesRequest) returns (GetAddressesResponse);
+    rpc EditAddress(EditAddressRequest) returns (EditAddressResponse);
+    rpc DeleteAddress(DeleteAddressRequest) returns (DeleteAddressResponse);
+}
+
+message Address {
+    string addressId = 1; 
+    string streetName = 2;
+    string locality = 3;
+    string state = 4;
+    string pincode = 5;
+}
+
+message BanUserRequest {
+    string userId = 1;
+}
+
+message BanUserResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message UnBanUserRequest {
+    string userId = 1;
+}
+
+message UnBanUserResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message RegisterRequest {
+    string email = 1;
+    string password = 2;
+    string name = 3;
+    Address address = 4; 
+    string phoneNumber = 5;
+}
+
+message RegisterResponse {
+    bool success = 1;
+    string message = 2;
+    string userId = 3;
+    string verificationCode = 4;
+}
+
+message LoginRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message LoginResponse {
+    bool success = 1;
+    string token = 2;
+    string refreshToken = 3;
+    string userId = 4;
+}
+
+message EmailVerificationRequest {
+    string userId = 1;
+    string verificationCode = 2;
+}
+
+message EmailVerificationResponse {
+    bool success = 1;
+    string message = 2;
+    string token = 3;
+}
+
+message GetProfileRequest {
+    string userId = 1;
+    string token = 2;
+}
+
+message GetProfileResponse {
+    string userId = 1;
+    string email = 2;
+    string name = 3;
+    int32 reputation = 4;
+    Address address = 5; 
+    string phoneNumber = 6;
+    bool isVerified = 7;
+    bool isBanned = 8;
+}
+
+message UpdateProfileRequest {
+    string userId = 1;
+    string name = 2;
+    repeated Address address = 3; 
+    string phoneNumber = 4;
+}
+
+message UpdateProfileResponse {
+    bool success = 1;
+    string message = 2;
+    GetProfileResponse profile = 3;
+}
+
+message GetUserByTokenRequest {
+    string token = 1;
+}
+
+message CheckBanRequest {
+    string userId = 1;
+}
+
+message CheckBanResponse {
+    string userId = 1;
+    bool banStatus = 2;
+}
+
+message AddAddressRequest {
+    string userId = 1;
+    Address address = 2;
+}
+
+message AddAddressResponse {
+    bool success = 1;
+    string message = 2;
+    string addressId = 3; 
+}
+
+message GetAddressesRequest {
+    string userId = 1;
+}
+
+message GetAddressesResponse {
+    bool success = 1;
+    string message = 2;
+    repeated Address addresses = 3; 
+}
+
+message EditAddressRequest {
+    string userId = 1;
+    string addressId = 2; 
+    Address address = 3; 
+}
+
+message EditAddressResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message DeleteAddressRequest {
+    string userId = 1;
+    string addressId = 2; 
+}
+
+message DeleteAddressResponse {
+    bool success = 1;
+    string message = 2;
+}

@@ -17,6 +17,14 @@ service UserService {
     rpc GetAddresses(GetAddressesRequest) returns (GetAddressesResponse);
     rpc EditAddress(EditAddressRequest) returns (EditAddressResponse);
     rpc DeleteAddress(DeleteAddressRequest) returns (DeleteAddressResponse);
+    rpc GetAllUsers(GetAllUsersRequest) returns (GetAllUsersResponse);
+}
+
+message GetAllUsersRequest{}
+
+message GetAllUsersResponse {
+  bool success  = 1;
+  repeated GetProfileResponse users = 2;
 }
 
 message Address {
@@ -102,7 +110,6 @@ message GetProfileResponse {
 message UpdateProfileRequest {
     string userId = 1;
     string name = 2;
-    repeated Address address = 3; 
     string phoneNumber = 4;
 }
 

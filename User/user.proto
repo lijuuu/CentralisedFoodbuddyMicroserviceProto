@@ -102,7 +102,7 @@ message GetProfileResponse {
     string name = 3;
     int32 reputation = 4;
     Address address = 5; 
-    string phoneNumber = 6;
+    uint64 phoneNumber = 6;
     bool isVerified = 7;
     bool isBanned = 8;
 }
@@ -110,7 +110,7 @@ message GetProfileResponse {
 message UpdateProfileRequest {
     string userId = 1;
     string name = 2;
-    string phoneNumber = 4;
+    uint64 phoneNumber = 4;
 }
 
 message UpdateProfileResponse {

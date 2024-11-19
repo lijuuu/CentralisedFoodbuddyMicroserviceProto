@@ -1,6 +1,6 @@
 # Install necessary tools for protobuf compilation
 GO_MODULE ?= $(shell go env GOPATH)
-PROTO_DIRS := Auth User
+PROTO_DIRS := Admin User OrderCart Restaurant
 
 init:
 	@echo "Initializing environment..."

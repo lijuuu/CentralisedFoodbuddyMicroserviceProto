@@ -1,0 +1,136 @@
+syntax = "proto3";
+
+package ordercart;
+option go_package = ".";
+
+// Define the OrderCartService
+service OrderCartService {
+    // Cart Operations
+    rpc AddProductToCart(AddProductToCartRequest) returns (AddProductToCartResponse);
+    rpc GetCartItems(GetCartItemsRequest) returns (GetCartItemsResponse);
+    rpc IncrementProductQuantity(IncrementProductQuantityRequest) returns (IncrementProductQuantityResponse);
+    rpc DecrementProductQuantity(DecrementProductQuantityRequest) returns (DecrementProductQuantityResponse);
+    rpc RemoveProductFromCart(RemoveProductFromCartRequest) returns (RemoveProductFromCartResponse);
+    rpc ClearCart(ClearCartRequest) returns (ClearCartResponse);
+    
+    // Order Operations
+    rpc PlaceOrderByRestID(PlaceOrderByRestIDRequest) returns (PlaceOrderByRestIDResponse);
+    rpc GetOrderDetailsAll(GetOrderDetailsAllRequest) returns (GetOrderDetailsAllResponse);
+    rpc GetOrderDetailsByID(GetOrderDetailsByIDRequest) returns (GetOrderDetailsByIDResponse);
+}
+
+// Cart Item message
+message CartItem {
+    string productId = 1;
+    string restaurantId = 2;
+    string productName = 3;
+    double price = 4;
+    int32 quantity = 5;
+}
+
+// Order Item message
+message OrderItem {
+    string productId = 1;
+    string productName = 2;
+    double price = 3;
+    int32 quantity = 4;
+}
+
+// Order message
+message Order {
+    string orderId = 1;
+    string userId = 2;
+    string restaurantId = 3;
+    repeated OrderItem items = 4;
+    double totalAmount = 5;
+    string orderStatus = 6;
+    string createdAt = 7;
+}
+
+// Cart Operations Messages
+message AddProductToCartRequest {
+    string userId = 1;
+    string productId = 2;
+    string restaurantId = 3;
+    string productName = 4;
+    double price = 5;
+    int32 quantity = 6;
+}
+
+message AddProductToCartResponse {
+    string message = 1;
+}
+
+message GetCartItemsRequest {
+    string userId = 1;
+}
+
+message GetCartItemsResponse {
+    repeated CartItem items = 1;
+    double totalAmount = 2;
+    string message = 3;
+}
+
+message IncrementProductQuantityRequest {
+    string userId = 1;
+    string productId = 2;
+}
+
+message IncrementProductQuantityResponse {
+    string message = 1;
+}
+
+message DecrementProductQuantityRequest {
+    string userId = 1;
+    string productId = 2;
+}
+
+message DecrementProductQuantityResponse {
+    string message = 1;
+}
+
+message RemoveProductFromCartRequest {
+    string userId = 1;
+    string productId = 2;
+}
+
+message RemoveProductFromCartResponse {
+    string message = 1;
+}
+
+message ClearCartRequest {
+    string userId = 1;
+}
+
+message ClearCartResponse {
+    string message = 1;
+}
+
+// Order Operations Messages
+message PlaceOrderByRestIDRequest {
+    string userId = 1;
+    string restaurantId = 2;
+}
+
+message PlaceOrderByRestIDResponse {
+    string orderId = 1;
+    string message = 2;
+}
+
+message GetOrderDetailsAllRequest {
+    string userId = 1;
+}
+
+message GetOrderDetailsAllResponse {
+    repeated Order orders = 1;
+    string message = 2;
+}
+
+message GetOrderDetailsByIDRequest {
+    string orderId = 1;
+}
+
+message GetOrderDetailsByIDResponse {
+    Order order = 1;
+    string message = 2;
+}

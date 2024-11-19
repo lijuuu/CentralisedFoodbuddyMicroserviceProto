@@ -1,0 +1,225 @@
+syntax = "proto3";
+
+package restaurant;
+option go_package = ".";
+
+// Define the RestaurantService
+service RestaurantService{
+    rpc RestaurantSignup(RestaurantSignupRequest) returns (RestaurantSignupResponse);
+    rpc RestaurantLogin(RestaurantLoginRequest) returns (RestaurantLoginResponse);
+
+    //restaurant
+    rpc EditRestaurant(EditRestaurantRequest) returns (EditRestaurantResponse);
+    rpc GetRestaurantProductsByID(GetRestaurantProductsByIDRequest) returns (GetRestaurantProductsByIDResponse);
+    rpc GetAllRestaurantWithProducts(GetAllRestaurantAndProductsRequest) returns (GetAllRestaurantWithProductsResponse);
+    rpc BanRestaurant(BanRestaurantRequest) returns (BanRestaurantResponse);
+    rpc UnbanRestaurant(UnbanRestaurantRequest) returns (UnbanRestaurantResponse);
+
+    //Product
+    rpc AddProduct(AddProductRequest) returns (AddProductResponse);
+    rpc EditProduct(EditProductRequest) returns (EditProductResponse);
+    rpc GetProductByID(GetProductByIDRequest) returns(GetProductByIDResponse);
+    rpc GetAllProducts(GetAllProductsRequest) returns (GetAllProductsResponse);
+    rpc DeleteProductByID(DeleteProductByIDRequest) returns (DeleteProductByIDResponse);
+
+    rpc IncremenentProductStockByValue(IncremenentProductStockByValueRequest) returns (IncremenentProductStockByValueResponse);
+    rpc DecrementProductStockByValue(DecrementProductStockByValueByValueRequest) returns (DecrementProductStockByValueResponse);
+
+    //Additional Related to cart + order
+    rpc GetRestaurantIDviaProductID(GetRestaurantIDviaProductIDRequest) returns (GetRestaurantIDviaProductIDResponse);
+    rpc GetStockByProductID(GetStockByProductIDRequest) returns (GetStockByProductIDResponse);
+    
+      
+}
+
+// Define messages for RestaurantService methods
+message EditRestaurantRequest {
+    string restaurantId = 1;
+    string restaurantName = 2;
+    uint64 phoneNumber = 3;
+    Address address = 4;
+}
+
+message EditRestaurantResponse {
+    string message = 1;
+}
+
+message GetRestaurantProductsByIDRequest {
+    string restaurantId = 1;
+}
+
+message GetRestaurantProductsByIDResponse {
+    repeated Product products = 1;
+    string message = 2;
+}
+
+message GetAllRestaurantAndProductsRequest {
+    // Empty request
+}
+
+message GetAllRestaurantWithProductsResponse {
+    repeated RestaurantWithProducts restaurants = 1;
+    string message = 2;
+}
+
+message RestaurantWithProducts {
+    string restaurantId = 1;
+    string restaurantName = 2;
+    uint64 phoneNumber = 3;
+    Address address = 4;
+    repeated Product products = 5;
+}
+
+message Product {
+    string productId = 1;
+    string restaurantId = 2;
+    string name = 3;
+    string description = 4;
+    double price = 5;
+    int32 stock = 6;
+    string category = 7;
+}
+
+message AddProductRequest {
+    string restaurantId = 1;
+    string name = 2;
+    string description = 3;
+    double price = 4;
+    int32 stock = 5;
+    string category = 6;
+}
+
+message AddProductResponse {
+    string productId = 1;
+    string message = 2;
+}
+
+message EditProductRequest {
+    string productId = 1;
+    string name = 2;
+    string description = 3;
+    double price = 4;
+    int32 stock = 5;
+    string category = 6;
+}
+
+message EditProductResponse {
+    string message = 1;
+}
+
+message GetProductByIDRequest {
+    string productId = 1;
+}
+
+message GetProductByIDResponse {
+    Product product = 1;
+    string message = 2;
+}
+
+message GetAllProductsRequest {
+    // Empty request
+}
+
+message GetAllProductsResponse {
+    repeated Product products = 1;
+    string message = 2;
+}
+
+message DeleteProductByIDRequest {
+    string productId = 1;
+}
+
+message DeleteProductByIDResponse {
+    string message = 1;
+}
+
+message IncremenentProductStockByValueRequest {
+    string productId = 1;
+    int32 value = 2;
+}
+
+message IncremenentProductStockByValueResponse {
+    string message = 1;
+}
+
+message DecrementProductStockByValueByValueRequest {
+    string productId = 1;
+    int32 value = 2;
+}
+
+message DecrementProductStockByValueResponse {
+    string message = 1;
+}
+
+message GetRestaurantIDviaProductIDRequest {
+    string productId = 1;
+}
+
+message GetRestaurantIDviaProductIDResponse {
+    string restaurantId = 1;
+    string message = 2;
+}
+
+message GetStockByProductIDRequest {
+    string productId = 1;
+}
+
+message GetStockByProductIDResponse {
+    int32 stock = 1;
+    string message = 2;
+}
+
+message BanRestaurantRequest {
+    string restaurantId = 1;
+    string reason = 2;
+}
+
+message BanRestaurantResponse {
+    string message = 1;
+}
+
+message UnbanRestaurantRequest {
+    string restaurantId = 1;
+}
+
+message UnbanRestaurantResponse {
+    string message = 1;
+}
+
+// Define the Address message
+message Address {
+    string addressId = 1; 
+    string streetName = 2;
+    string locality = 3;
+    string state = 4;
+    string pincode = 5;
+}
+
+// Define the RestaurantSignupRequest message
+message RestaurantSignupRequest {
+    string restaurantName = 1;
+    string ownerEmail = 2;
+    string password = 3;
+    uint64 phoneNumber = 4;
+    Address address = 5;
+}
+
+// Define the RestaurantSignupResponse message
+message RestaurantSignupResponse {
+    string restaurantId = 1;
+    string token = 2; 
+    string message = 3;
+}
+
+// Define the RestaurantLoginRequest message
+message RestaurantLoginRequest {
+    string ownerEmail = 1;
+    string password = 2;
+}
+
+// Define the RestaurantLoginResponse message
+message RestaurantLoginResponse {
+    string restaurantId = 1;
+    string token = 2; 
+    string message = 3;
+}

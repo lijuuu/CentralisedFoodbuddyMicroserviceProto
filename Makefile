@@ -4,8 +4,7 @@ PROTO_DIRS := Auth User
 
 init:
 	@echo "Initializing environment..."
-	@mkdir -p $(HOME)/go/bin
-	@export PATH=$(PATH):$(HOME)/go/bin
+	@export PATH=$PATH:$HOME/go/bin
 
 install-tools:
 	@echo "Installing necessary tools..."
@@ -22,7 +21,6 @@ generate-proto:
 			$$dir/*.proto; \
 		echo "Generated proto for $$dir service"; \
 	done
-	@echo "All proto files generated successfully."
 
 tidy:
 	@go mod tidy

@@ -4,8 +4,8 @@ package user;
 option go_package = ".";
 
 service UserService {
-    rpc Register(RegisterRequest) returns (RegisterResponse);
-    rpc Login(LoginRequest) returns (LoginResponse);
+    rpc UserLogin(UserLoginRequest) returns (UserLoginResponse);
+    rpc UserSignup(UserSignupRequest) returns (UserSignupResponse);
     rpc VerifyEmail(EmailVerificationRequest) returns (EmailVerificationResponse);
     rpc GetProfile(GetProfileRequest) returns (GetProfileResponse);
     rpc UpdateProfile(UpdateProfileRequest) returns (UpdateProfileResponse);
@@ -25,6 +25,33 @@ message GetAllUsersRequest{}
 message GetAllUsersResponse {
   bool success  = 1;
   repeated GetProfileResponse users = 2;
+}
+
+message UserLoginRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message UserLoginResponse {
+    string userId = 1;
+    string token = 2; 
+    string message = 3;
+}
+
+message UserSignupRequest {
+    string email = 1;
+    string password = 2;
+    string username = 3;
+    string firstName = 4;
+    string lastName = 5;
+    uint64 phoneNumber = 6;
+    Address address = 7;
+}
+
+message UserSignupResponse {
+    string userId = 1;
+    string token = 2; 
+    string message = 3;
 }
 
 message Address {

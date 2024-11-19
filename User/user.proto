@@ -33,9 +33,10 @@ message UserLoginRequest {
 }
 
 message UserLoginResponse {
-    string userId = 1;
-    string token = 2; 
-    string message = 3;
+    bool success =1;
+    string userId = 2;
+    string token = 3; 
+    string message = 4;
 }
 
 message UserSignupRequest {
@@ -49,9 +50,10 @@ message UserSignupRequest {
 }
 
 message UserSignupResponse {
-    string userId = 1;
-    string token = 2; 
-    string message = 3;
+    bool success =1;
+    string userId = 2;
+    string token = 3; 
+    string message = 4;
 }
 
 message Address {

@@ -80,33 +80,6 @@ message UnBanUserResponse {
     string message = 2;
 }
 
-message RegisterRequest {
-    string email = 1;
-    string password = 2;
-    string name = 3;
-    Address address = 4; 
-    string phoneNumber = 5;
-}
-
-message RegisterResponse {
-    bool success = 1;
-    string message = 2;
-    string userId = 3;
-    string verificationCode = 4;
-}
-
-message LoginRequest {
-    string email = 1;
-    string password = 2;
-}
-
-message LoginResponse {
-    bool success = 1;
-    string token = 2;
-    string refreshToken = 3;
-    string userId = 4;
-}
-
 message EmailVerificationRequest {
     string userId = 1;
     string verificationCode = 2;

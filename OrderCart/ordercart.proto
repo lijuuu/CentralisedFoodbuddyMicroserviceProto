@@ -17,6 +17,7 @@ service OrderCartService {
     rpc PlaceOrderByRestID(PlaceOrderByRestIDRequest) returns (PlaceOrderByRestIDResponse);
     rpc GetOrderDetailsAll(GetOrderDetailsAllRequest) returns (GetOrderDetailsAllResponse);
     rpc GetOrderDetailsByID(GetOrderDetailsByIDRequest) returns (GetOrderDetailsByIDResponse);
+    rpc CancelOrder(CancelOrderRequest) returns (CancelOrderResponse);
 }
 
 // Cart Item message
@@ -132,5 +133,16 @@ message GetOrderDetailsByIDRequest {
 
 message GetOrderDetailsByIDResponse {
     Order order = 1;
+    string message = 2;
+}
+
+// Cancel Order Messages
+message CancelOrderRequest {
+    string orderId = 1;
+    string userId = 2;
+}
+
+message CancelOrderResponse {
+    bool success = 1;
     string message = 2;
 }

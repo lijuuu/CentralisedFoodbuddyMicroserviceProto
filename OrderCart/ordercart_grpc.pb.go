@@ -21,6 +21,8 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	OrderCartService_AddProductToCart_FullMethodName         = "/ordercart.OrderCartService/AddProductToCart"
 	OrderCartService_GetCartItems_FullMethodName             = "/ordercart.OrderCartService/GetCartItems"
+	OrderCartService_GetCartByRestaurant_FullMethodName      = "/ordercart.OrderCartService/GetCartByRestaurant"
+	OrderCartService_GetAllCarts_FullMethodName              = "/ordercart.OrderCartService/GetAllCarts"
 	OrderCartService_IncrementProductQuantity_FullMethodName = "/ordercart.OrderCartService/IncrementProductQuantity"
 	OrderCartService_DecrementProductQuantity_FullMethodName = "/ordercart.OrderCartService/DecrementProductQuantity"
 	OrderCartService_RemoveProductFromCart_FullMethodName    = "/ordercart.OrderCartService/RemoveProductFromCart"
@@ -43,6 +45,8 @@ type OrderCartServiceClient interface {
 	// Cart Operations
 	AddProductToCart(ctx context.Context, in *AddProductToCartRequest, opts ...grpc.CallOption) (*AddProductToCartResponse, error)
 	GetCartItems(ctx context.Context, in *GetCartItemsRequest, opts ...grpc.CallOption) (*GetCartItemsResponse, error)
+	GetCartByRestaurant(ctx context.Context, in *GetCartByRestaurantRequest, opts ...grpc.CallOption) (*GetCartByRestaurantResponse, error)
+	GetAllCarts(ctx context.Context, in *GetAllCartsRequest, opts ...grpc.CallOption) (*GetAllCartsResponse, error)
 	IncrementProductQuantity(ctx context.Context, in *IncrementProductQuantityRequest, opts ...grpc.CallOption) (*IncrementProductQuantityResponse, error)
 	DecrementProductQuantity(ctx context.Context, in *DecrementProductQuantityRequest, opts ...grpc.CallOption) (*DecrementProductQuantityResponse, error)
 	RemoveProductFromCart(ctx context.Context, in *RemoveProductFromCartRequest, opts ...grpc.CallOption) (*RemoveProductFromCartResponse, error)
@@ -79,6 +83,26 @@ func (c *orderCartServiceClient) GetCartItems(ctx context.Context, in *GetCartIt
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetCartItemsResponse)
 	err := c.cc.Invoke(ctx, OrderCartService_GetCartItems_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderCartServiceClient) GetCartByRestaurant(ctx context.Context, in *GetCartByRestaurantRequest, opts ...grpc.CallOption) (*GetCartByRestaurantResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetCartByRestaurantResponse)
+	err := c.cc.Invoke(ctx, OrderCartService_GetCartByRestaurant_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderCartServiceClient) GetAllCarts(ctx context.Context, in *GetAllCartsRequest, opts ...grpc.CallOption) (*GetAllCartsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetAllCartsResponse)
+	err := c.cc.Invoke(ctx, OrderCartService_GetAllCarts_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -204,6 +228,8 @@ type OrderCartServiceServer interface {
 	// Cart Operations
 	AddProductToCart(context.Context, *AddProductToCartRequest) (*AddProductToCartResponse, error)
 	GetCartItems(context.Context, *GetCartItemsRequest) (*GetCartItemsResponse, error)
+	GetCartByRestaurant(context.Context, *GetCartByRestaurantRequest) (*GetCartByRestaurantResponse, error)
+	GetAllCarts(context.Context, *GetAllCartsRequest) (*GetAllCartsResponse, error)
 	IncrementProductQuantity(context.Context, *IncrementProductQuantityRequest) (*IncrementProductQuantityResponse, error)
 	DecrementProductQuantity(context.Context, *DecrementProductQuantityRequest) (*DecrementProductQuantityResponse, error)
 	RemoveProductFromCart(context.Context, *RemoveProductFromCartRequest) (*RemoveProductFromCartResponse, error)
@@ -231,6 +257,12 @@ func (UnimplementedOrderCartServiceServer) AddProductToCart(context.Context, *Ad
 }
 func (UnimplementedOrderCartServiceServer) GetCartItems(context.Context, *GetCartItemsRequest) (*GetCartItemsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCartItems not implemented")
+}
+func (UnimplementedOrderCartServiceServer) GetCartByRestaurant(context.Context, *GetCartByRestaurantRequest) (*GetCartByRestaurantResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCartByRestaurant not implemented")
+}
+func (UnimplementedOrderCartServiceServer) GetAllCarts(context.Context, *GetAllCartsRequest) (*GetAllCartsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllCarts not implemented")
 }
 func (UnimplementedOrderCartServiceServer) IncrementProductQuantity(context.Context, *IncrementProductQuantityRequest) (*IncrementProductQuantityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IncrementProductQuantity not implemented")
@@ -318,6 +350,42 @@ func _OrderCartService_GetCartItems_Handler(srv interface{}, ctx context.Context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrderCartServiceServer).GetCartItems(ctx, req.(*GetCartItemsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderCartService_GetCartByRestaurant_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCartByRestaurantRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderCartServiceServer).GetCartByRestaurant(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderCartService_GetCartByRestaurant_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderCartServiceServer).GetCartByRestaurant(ctx, req.(*GetCartByRestaurantRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderCartService_GetAllCarts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllCartsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderCartServiceServer).GetAllCarts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderCartService_GetAllCarts_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderCartServiceServer).GetAllCarts(ctx, req.(*GetAllCartsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -534,6 +602,14 @@ var OrderCartService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCartItems",
 			Handler:    _OrderCartService_GetCartItems_Handler,
+		},
+		{
+			MethodName: "GetCartByRestaurant",
+			Handler:    _OrderCartService_GetCartByRestaurant_Handler,
+		},
+		{
+			MethodName: "GetAllCarts",
+			Handler:    _OrderCartService_GetAllCarts_Handler,
 		},
 		{
 			MethodName: "IncrementProductQuantity",

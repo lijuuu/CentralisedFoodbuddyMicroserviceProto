@@ -8,6 +8,8 @@ service OrderCartService {
     // Cart Operations
     rpc AddProductToCart(AddProductToCartRequest) returns (AddProductToCartResponse);
     rpc GetCartItems(GetCartItemsRequest) returns (GetCartItemsResponse);
+    rpc GetCartByRestaurant(GetCartByRestaurantRequest) returns (GetCartByRestaurantResponse);
+    rpc GetAllCarts(GetAllCartsRequest) returns (GetAllCartsResponse);
     rpc IncrementProductQuantity(IncrementProductQuantityRequest) returns (IncrementProductQuantityResponse);
     rpc DecrementProductQuantity(DecrementProductQuantityRequest) returns (DecrementProductQuantityResponse);
     rpc RemoveProductFromCart(RemoveProductFromCartRequest) returns (RemoveProductFromCartResponse);
@@ -30,6 +32,13 @@ message CartItem {
     string productName = 3;
     double price = 4;
     int32 quantity = 5;
+}
+
+// Restaurant Cart message
+message RestaurantCart {
+    string restaurantId = 1;
+    repeated CartItem items = 2;
+    double totalAmount = 3;
 }
 
 // Order Item message
@@ -56,19 +65,16 @@ message Order {
 message AddProductToCartRequest {
     string userId = 1;
     string productId = 2;
-    string restaurantId = 3;
-    string productName = 4;
-    double price = 5;
-    int32 quantity = 6;
+    int32 quantity = 3;
 }
 
 message AddProductToCartResponse {
-    bool success = 1;
-    string message = 2;
+    string message = 1;
 }
 
 message GetCartItemsRequest {
     string userId = 1;
+    string restaurantId = 2;
 }
 
 message GetCartItemsResponse {
@@ -77,9 +83,28 @@ message GetCartItemsResponse {
     string message = 3;
 }
 
+message GetCartByRestaurantRequest {
+    string userId = 1;
+    string restaurantId = 2;
+}
+
+message GetCartByRestaurantResponse {
+    repeated CartItem items = 1;
+    double totalAmount = 2;
+}
+
+message GetAllCartsRequest {
+    string userId = 1;
+}
+
+message GetAllCartsResponse {
+    repeated RestaurantCart carts = 1;
+}
+
 message IncrementProductQuantityRequest {
     string userId = 1;
     string productId = 2;
+    string restaurantId = 3;
 }
 
 message IncrementProductQuantityResponse {
@@ -90,6 +115,7 @@ message IncrementProductQuantityResponse {
 message DecrementProductQuantityRequest {
     string userId = 1;
     string productId = 2;
+    string restaurantId = 3;
 }
 
 message DecrementProductQuantityResponse {
@@ -100,6 +126,7 @@ message DecrementProductQuantityResponse {
 message RemoveProductFromCartRequest {
     string userId = 1;
     string productId = 2;
+    string restaurantId = 3;
 }
 
 message RemoveProductFromCartResponse {
@@ -109,6 +136,7 @@ message RemoveProductFromCartResponse {
 
 message ClearCartRequest {
     string userId = 1;
+    string restaurantId = 2;
 }
 
 message ClearCartResponse {
@@ -135,9 +163,8 @@ message PlaceOrderByRestIDRequest {
 }
 
 message PlaceOrderByRestIDResponse {
-    bool success = 1;
-    string orderId = 2;
-    string message = 3;
+    string orderId = 1;
+    string message = 2;
 }
 
 message GetOrderDetailsAllRequest {

@@ -12,12 +12,15 @@ service OrderCartService {
     rpc DecrementProductQuantity(DecrementProductQuantityRequest) returns (DecrementProductQuantityResponse);
     rpc RemoveProductFromCart(RemoveProductFromCartRequest) returns (RemoveProductFromCartResponse);
     rpc ClearCart(ClearCartRequest) returns (ClearCartResponse);
+    rpc ValidateCartItems(ValidateCartItemsRequest) returns (ValidateCartItemsResponse);
     
     // Order Operations
     rpc PlaceOrderByRestID(PlaceOrderByRestIDRequest) returns (PlaceOrderByRestIDResponse);
     rpc GetOrderDetailsAll(GetOrderDetailsAllRequest) returns (GetOrderDetailsAllResponse);
     rpc GetOrderDetailsByID(GetOrderDetailsByIDRequest) returns (GetOrderDetailsByIDResponse);
     rpc CancelOrder(CancelOrderRequest) returns (CancelOrderResponse);
+    rpc UpdateOrderStatus(UpdateOrderStatusRequest) returns (UpdateOrderStatusResponse);
+    rpc GetRestaurantOrders(GetRestaurantOrdersRequest) returns (GetRestaurantOrdersResponse);
 }
 
 // Cart Item message
@@ -44,8 +47,9 @@ message Order {
     string restaurantId = 3;
     repeated OrderItem items = 4;
     double totalAmount = 5;
-    string orderStatus = 6;
+    string orderStatus = 6;  // "PENDING", "ACCEPTED", "PREPARING", "READY", "DELIVERED", "CANCELLED"
     string createdAt = 7;
+    string deliveryAddress = 8;  // Added for delivery information
 }
 
 // Cart Operations Messages
@@ -59,7 +63,8 @@ message AddProductToCartRequest {
 }
 
 message AddProductToCartResponse {
-    string message = 1;
+    bool success = 1;
+    string message = 2;
 }
 
 message GetCartItemsRequest {
@@ -78,7 +83,8 @@ message IncrementProductQuantityRequest {
 }
 
 message IncrementProductQuantityResponse {
-    string message = 1;
+    bool success = 1;
+    string message = 2;
 }
 
 message DecrementProductQuantityRequest {
@@ -87,7 +93,8 @@ message DecrementProductQuantityRequest {
 }
 
 message DecrementProductQuantityResponse {
-    string message = 1;
+    bool success = 1;
+    string message = 2;
 }
 
 message RemoveProductFromCartRequest {
@@ -96,7 +103,8 @@ message RemoveProductFromCartRequest {
 }
 
 message RemoveProductFromCartResponse {
-    string message = 1;
+    bool success = 1;
+    string message = 2;
 }
 
 message ClearCartRequest {
@@ -104,22 +112,37 @@ message ClearCartRequest {
 }
 
 message ClearCartResponse {
-    string message = 1;
+    bool success = 1;
+    string message = 2;
+}
+
+message ValidateCartItemsRequest {
+    string userId = 1;
+    string restaurantId = 2;
+}
+
+message ValidateCartItemsResponse {
+    bool isValid = 1;
+    string message = 2;
+    repeated string invalidProductIds = 3;  // Products that are out of stock or unavailable
 }
 
 // Order Operations Messages
 message PlaceOrderByRestIDRequest {
     string userId = 1;
     string restaurantId = 2;
+    string deliveryAddressId = 3;  // Added for delivery information
 }
 
 message PlaceOrderByRestIDResponse {
-    string orderId = 1;
-    string message = 2;
+    bool success = 1;
+    string orderId = 2;
+    string message = 3;
 }
 
 message GetOrderDetailsAllRequest {
     string userId = 1;
+    string status = 2;  // Optional, filter by status
 }
 
 message GetOrderDetailsAllResponse {
@@ -129,6 +152,7 @@ message GetOrderDetailsAllResponse {
 
 message GetOrderDetailsByIDRequest {
     string orderId = 1;
+    string userId = 2;  // Added for authorization
 }
 
 message GetOrderDetailsByIDResponse {
@@ -136,13 +160,34 @@ message GetOrderDetailsByIDResponse {
     string message = 2;
 }
 
-// Cancel Order Messages
 message CancelOrderRequest {
     string orderId = 1;
     string userId = 2;
+    string reason = 3;  // Added to track cancellation reason
 }
 
 message CancelOrderResponse {
     bool success = 1;
+    string message = 2;
+}
+
+message UpdateOrderStatusRequest {
+    string orderId = 1;
+    string restaurantId = 2;  // For authorization
+    string newStatus = 3;     // "ACCEPTED", "PREPARING", "READY", "DELIVERED"
+}
+
+message UpdateOrderStatusResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message GetRestaurantOrdersRequest {
+    string restaurantId = 1;
+    string status = 2;        // Optional, filter by status
+}
+
+message GetRestaurantOrdersResponse {
+    repeated Order orders = 1;
     string message = 2;
 }

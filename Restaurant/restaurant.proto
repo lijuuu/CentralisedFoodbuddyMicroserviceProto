@@ -96,11 +96,12 @@ message AddProductResponse {
 
 message EditProductRequest {
     string productId = 1;
-    string name = 2;
-    string description = 3;
-    double price = 4;
-    int32 stock = 5;
-    string category = 6;
+    string restaurantId = 2;
+    string name = 3;
+    string description = 4;
+    double price = 5;
+    int32 stock = 6;
+    string category = 7;
 }
 
 message EditProductResponse {
@@ -127,6 +128,7 @@ message GetAllProductsResponse {
 
 message DeleteProductByIDRequest {
     string productId = 1;
+    string restaurantId = 2;
 }
 
 message DeleteProductByIDResponse {

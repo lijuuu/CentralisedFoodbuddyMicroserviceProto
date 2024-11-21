@@ -137,7 +137,8 @@ message DeleteProductByIDResponse {
 
 message IncremenentProductStockByValueRequest {
     string productId = 1;
-    int32 value = 2;
+    string restaurantId = 2;
+    int32 value = 3;
 }
 
 message IncremenentProductStockByValueResponse {
@@ -146,7 +147,8 @@ message IncremenentProductStockByValueResponse {
 
 message DecrementProductStockByValueByValueRequest {
     string productId = 1;
-    int32 value = 2;
+    string restaurantId = 2;
+    int32 value = 3;
 }
 
 message DecrementProductStockByValueResponse {

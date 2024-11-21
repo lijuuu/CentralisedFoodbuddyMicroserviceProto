@@ -25,28 +25,43 @@ service OrderCartService {
     rpc GetRestaurantOrders(GetRestaurantOrdersRequest) returns (GetRestaurantOrdersResponse);
 }
 
+// Address message
+message Address {
+    string streetName = 1;
+    string locality = 2;
+    string state = 3;
+    string pincode = 4;
+}
+
 // Cart Item message
 message CartItem {
     string productId = 1;
     string restaurantId = 2;
     string productName = 3;
-    double price = 4;
-    int32 quantity = 5;
+    string description = 4;
+    string category = 5;
+    double price = 6;
+    int32 quantity = 7;
 }
 
 // Restaurant Cart message
 message RestaurantCart {
     string restaurantId = 1;
-    repeated CartItem items = 2;
-    double totalAmount = 3;
+    string restaurantName = 2;
+    uint64 restaurantPhone = 3;
+    Address address = 4;
+    repeated CartItem items = 5;
+    double totalAmount = 6;
 }
 
 // Order Item message
 message OrderItem {
     string productId = 1;
     string productName = 2;
-    double price = 3;
-    int32 quantity = 4;
+    string description = 3;
+    string category = 4;
+    double price = 5;
+    int32 quantity = 6;
 }
 
 // Order message
@@ -54,11 +69,15 @@ message Order {
     string orderId = 1;
     string userId = 2;
     string restaurantId = 3;
-    repeated OrderItem items = 4;
-    double totalAmount = 5;
-    string orderStatus = 6;  // "PENDING", "ACCEPTED", "PREPARING", "READY", "DELIVERED", "CANCELLED"
-    string createdAt = 7;
-    string deliveryAddress = 8;  // Added for delivery information
+    string restaurantName = 4;
+    uint64 restaurantPhone = 5;
+    Address restaurantAddress = 6;
+    repeated OrderItem items = 7;
+    double totalAmount = 8;
+    string orderStatus = 9;  // "PENDING", "ACCEPTED", "PREPARING", "READY", "DELIVERED", "CANCELLED"
+    string createdAt = 10;
+    Address deliveryAddress = 11;
+    string cancelReason = 12;
 }
 
 // Cart Operations Messages
@@ -69,7 +88,8 @@ message AddProductToCartRequest {
 }
 
 message AddProductToCartResponse {
-    string message = 1;
+    bool success = 1;
+    string message = 2;
 }
 
 message GetCartItemsRequest {
@@ -81,6 +101,9 @@ message GetCartItemsResponse {
     repeated CartItem items = 1;
     double totalAmount = 2;
     string message = 3;
+    string restaurantName = 4;
+    uint64 restaurantPhone = 5;
+    Address restaurantAddress = 6;
 }
 
 message GetCartByRestaurantRequest {
@@ -91,6 +114,9 @@ message GetCartByRestaurantRequest {
 message GetCartByRestaurantResponse {
     repeated CartItem items = 1;
     double totalAmount = 2;
+    string restaurantName = 3;
+    uint64 restaurantPhone = 4;
+    Address restaurantAddress = 5;
 }
 
 message GetAllCartsRequest {
@@ -99,6 +125,7 @@ message GetAllCartsRequest {
 
 message GetAllCartsResponse {
     repeated RestaurantCart carts = 1;
+    double totalOverallAmount = 2;
 }
 
 message IncrementProductQuantityRequest {
@@ -110,6 +137,7 @@ message IncrementProductQuantityRequest {
 message IncrementProductQuantityResponse {
     bool success = 1;
     string message = 2;
+    CartItem updatedItem = 3;
 }
 
 message DecrementProductQuantityRequest {
@@ -121,6 +149,7 @@ message DecrementProductQuantityRequest {
 message DecrementProductQuantityResponse {
     bool success = 1;
     string message = 2;
+    CartItem updatedItem = 3;
 }
 
 message RemoveProductFromCartRequest {
@@ -152,34 +181,41 @@ message ValidateCartItemsRequest {
 message ValidateCartItemsResponse {
     bool isValid = 1;
     string message = 2;
-    repeated string invalidProductIds = 3;  // Products that are out of stock or unavailable
+    repeated string invalidProductIds = 3;
+    repeated string reasons = 4;
 }
 
 // Order Operations Messages
 message PlaceOrderByRestIDRequest {
     string userId = 1;
     string restaurantId = 2;
-    string deliveryAddressId = 3;  // Added for delivery information
+    Address deliveryAddress = 3;
 }
 
 message PlaceOrderByRestIDResponse {
     string orderId = 1;
-    string message = 2;
+    bool success = 2;
+    string message = 3;
+    Order order = 4;
 }
 
 message GetOrderDetailsAllRequest {
     string userId = 1;
     string status = 2;  // Optional, filter by status
+    string startDate = 3;
+    string endDate = 4;
 }
 
 message GetOrderDetailsAllResponse {
     repeated Order orders = 1;
     string message = 2;
+    int32 totalOrders = 3;
+    double totalAmount = 4;
 }
 
 message GetOrderDetailsByIDRequest {
     string orderId = 1;
-    string userId = 2;  // Added for authorization
+    string userId = 2;  // For authorization
 }
 
 message GetOrderDetailsByIDResponse {
@@ -190,31 +226,38 @@ message GetOrderDetailsByIDResponse {
 message CancelOrderRequest {
     string orderId = 1;
     string userId = 2;
-    string reason = 3;  // Added to track cancellation reason
+    string reason = 3;
 }
 
 message CancelOrderResponse {
     bool success = 1;
     string message = 2;
+    string cancelReason = 3;
 }
 
 message UpdateOrderStatusRequest {
     string orderId = 1;
     string restaurantId = 2;  // For authorization
     string newStatus = 3;     // "ACCEPTED", "PREPARING", "READY", "DELIVERED"
+    string statusNote = 4;
 }
 
 message UpdateOrderStatusResponse {
     bool success = 1;
     string message = 2;
+    string currentStatus = 3;
 }
 
 message GetRestaurantOrdersRequest {
     string restaurantId = 1;
     string status = 2;        // Optional, filter by status
+    string startDate = 3;
+    string endDate = 4;
 }
 
 message GetRestaurantOrdersResponse {
     repeated Order orders = 1;
     string message = 2;
+    int32 totalOrders = 3;
+    double totalAmount = 4;
 }

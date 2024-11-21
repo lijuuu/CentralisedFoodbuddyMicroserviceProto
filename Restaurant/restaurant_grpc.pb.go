@@ -27,6 +27,7 @@ const (
 	RestaurantService_BanRestaurant_FullMethodName                  = "/restaurant.RestaurantService/BanRestaurant"
 	RestaurantService_UnbanRestaurant_FullMethodName                = "/restaurant.RestaurantService/UnbanRestaurant"
 	RestaurantService_CheckRestaurantBanStatus_FullMethodName       = "/restaurant.RestaurantService/CheckRestaurantBanStatus"
+	RestaurantService_GetRestaurantByID_FullMethodName              = "/restaurant.RestaurantService/GetRestaurantByID"
 	RestaurantService_AddProduct_FullMethodName                     = "/restaurant.RestaurantService/AddProduct"
 	RestaurantService_EditProduct_FullMethodName                    = "/restaurant.RestaurantService/EditProduct"
 	RestaurantService_GetProductByID_FullMethodName                 = "/restaurant.RestaurantService/GetProductByID"
@@ -53,6 +54,7 @@ type RestaurantServiceClient interface {
 	BanRestaurant(ctx context.Context, in *BanRestaurantRequest, opts ...grpc.CallOption) (*BanRestaurantResponse, error)
 	UnbanRestaurant(ctx context.Context, in *UnbanRestaurantRequest, opts ...grpc.CallOption) (*UnbanRestaurantResponse, error)
 	CheckRestaurantBanStatus(ctx context.Context, in *CheckRestaurantBanStatusRequest, opts ...grpc.CallOption) (*CheckRestaurantBanStatusResponse, error)
+	GetRestaurantByID(ctx context.Context, in *GetRestaurantByIDRequest, opts ...grpc.CallOption) (*GetRestaurantByIDResponse, error)
 	// Product
 	AddProduct(ctx context.Context, in *AddProductRequest, opts ...grpc.CallOption) (*AddProductResponse, error)
 	EditProduct(ctx context.Context, in *EditProductRequest, opts ...grpc.CallOption) (*EditProductResponse, error)
@@ -148,6 +150,16 @@ func (c *restaurantServiceClient) CheckRestaurantBanStatus(ctx context.Context, 
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CheckRestaurantBanStatusResponse)
 	err := c.cc.Invoke(ctx, RestaurantService_CheckRestaurantBanStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *restaurantServiceClient) GetRestaurantByID(ctx context.Context, in *GetRestaurantByIDRequest, opts ...grpc.CallOption) (*GetRestaurantByIDResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetRestaurantByIDResponse)
+	err := c.cc.Invoke(ctx, RestaurantService_GetRestaurantByID_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -259,6 +271,7 @@ type RestaurantServiceServer interface {
 	BanRestaurant(context.Context, *BanRestaurantRequest) (*BanRestaurantResponse, error)
 	UnbanRestaurant(context.Context, *UnbanRestaurantRequest) (*UnbanRestaurantResponse, error)
 	CheckRestaurantBanStatus(context.Context, *CheckRestaurantBanStatusRequest) (*CheckRestaurantBanStatusResponse, error)
+	GetRestaurantByID(context.Context, *GetRestaurantByIDRequest) (*GetRestaurantByIDResponse, error)
 	// Product
 	AddProduct(context.Context, *AddProductRequest) (*AddProductResponse, error)
 	EditProduct(context.Context, *EditProductRequest) (*EditProductResponse, error)
@@ -303,6 +316,9 @@ func (UnimplementedRestaurantServiceServer) UnbanRestaurant(context.Context, *Un
 }
 func (UnimplementedRestaurantServiceServer) CheckRestaurantBanStatus(context.Context, *CheckRestaurantBanStatusRequest) (*CheckRestaurantBanStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckRestaurantBanStatus not implemented")
+}
+func (UnimplementedRestaurantServiceServer) GetRestaurantByID(context.Context, *GetRestaurantByIDRequest) (*GetRestaurantByIDResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRestaurantByID not implemented")
 }
 func (UnimplementedRestaurantServiceServer) AddProduct(context.Context, *AddProductRequest) (*AddProductResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddProduct not implemented")
@@ -492,6 +508,24 @@ func _RestaurantService_CheckRestaurantBanStatus_Handler(srv interface{}, ctx co
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RestaurantServiceServer).CheckRestaurantBanStatus(ctx, req.(*CheckRestaurantBanStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RestaurantService_GetRestaurantByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRestaurantByIDRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RestaurantServiceServer).GetRestaurantByID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RestaurantService_GetRestaurantByID_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RestaurantServiceServer).GetRestaurantByID(ctx, req.(*GetRestaurantByIDRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -696,6 +730,10 @@ var RestaurantService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckRestaurantBanStatus",
 			Handler:    _RestaurantService_CheckRestaurantBanStatus_Handler,
+		},
+		{
+			MethodName: "GetRestaurantByID",
+			Handler:    _RestaurantService_GetRestaurantByID_Handler,
 		},
 		{
 			MethodName: "AddProduct",

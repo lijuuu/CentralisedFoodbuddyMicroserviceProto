@@ -15,6 +15,7 @@ service RestaurantService{
     rpc BanRestaurant(BanRestaurantRequest) returns (BanRestaurantResponse);
     rpc UnbanRestaurant(UnbanRestaurantRequest) returns (UnbanRestaurantResponse);
     rpc CheckRestaurantBanStatus(CheckRestaurantBanStatusRequest) returns (CheckRestaurantBanStatusResponse); 
+    rpc GetRestaurantByID(GetRestaurantByIDRequest) returns (GetRestaurantByIDResponse);
 
     //Product
     rpc AddProduct(AddProductRequest) returns (AddProductResponse);
@@ -196,6 +197,21 @@ message UnbanRestaurantRequest {
 
 message UnbanRestaurantResponse {
     string message = 1;
+}
+
+message GetRestaurantByIDRequest {
+    string restaurantId = 1;
+}
+
+message GetRestaurantByIDResponse {
+    bool success = 1;
+    string message = 2;
+    string restaurantId = 3;
+    string restaurantName = 4;
+    uint64 phoneNumber = 5;
+    Address address = 6;
+    bool isBanned = 7;
+    string banReason = 8;
 }
 
 // Define the Address message

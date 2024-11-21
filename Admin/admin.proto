@@ -1,0 +1,20 @@
+syntax = "proto3";
+package admin;
+
+option go_package = ".";
+
+service AdminService {
+    rpc AdminLogin(AdminLoginRequest) returns (AdminLoginResponse);
+}
+
+
+message AdminLoginRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message AdminLoginResponse {
+    bool success = 1;
+    string token = 2;
+    string message = 3;
+}

@@ -126,7 +126,6 @@ func (x *CheckRestaurantBanStatusResponse) GetMessage() string {
 	return ""
 }
 
-// Define messages for RestaurantService methods
 type EditRestaurantRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

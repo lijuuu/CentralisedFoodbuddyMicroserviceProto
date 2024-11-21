@@ -19,20 +19,21 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	UserService_UserLogin_FullMethodName      = "/user.UserService/UserLogin"
-	UserService_UserSignup_FullMethodName     = "/user.UserService/UserSignup"
-	UserService_VerifyEmail_FullMethodName    = "/user.UserService/VerifyEmail"
-	UserService_GetProfile_FullMethodName     = "/user.UserService/GetProfile"
-	UserService_UpdateProfile_FullMethodName  = "/user.UserService/UpdateProfile"
-	UserService_GetUserByToken_FullMethodName = "/user.UserService/GetUserByToken"
-	UserService_CheckBan_FullMethodName       = "/user.UserService/CheckBan"
-	UserService_BanUser_FullMethodName        = "/user.UserService/BanUser"
-	UserService_UnBanUser_FullMethodName      = "/user.UserService/UnBanUser"
-	UserService_AddAddress_FullMethodName     = "/user.UserService/AddAddress"
-	UserService_GetAddresses_FullMethodName   = "/user.UserService/GetAddresses"
-	UserService_EditAddress_FullMethodName    = "/user.UserService/EditAddress"
-	UserService_DeleteAddress_FullMethodName  = "/user.UserService/DeleteAddress"
-	UserService_GetAllUsers_FullMethodName    = "/user.UserService/GetAllUsers"
+	UserService_UserLogin_FullMethodName           = "/user.UserService/UserLogin"
+	UserService_UserSignup_FullMethodName          = "/user.UserService/UserSignup"
+	UserService_VerifyEmail_FullMethodName         = "/user.UserService/VerifyEmail"
+	UserService_GetProfile_FullMethodName          = "/user.UserService/GetProfile"
+	UserService_UpdateProfile_FullMethodName       = "/user.UserService/UpdateProfile"
+	UserService_GetUserByToken_FullMethodName      = "/user.UserService/GetUserByToken"
+	UserService_CheckBan_FullMethodName            = "/user.UserService/CheckBan"
+	UserService_BanUser_FullMethodName             = "/user.UserService/BanUser"
+	UserService_UnBanUser_FullMethodName           = "/user.UserService/UnBanUser"
+	UserService_AddAddress_FullMethodName          = "/user.UserService/AddAddress"
+	UserService_GetAddresses_FullMethodName        = "/user.UserService/GetAddresses"
+	UserService_EditAddress_FullMethodName         = "/user.UserService/EditAddress"
+	UserService_DeleteAddress_FullMethodName       = "/user.UserService/DeleteAddress"
+	UserService_GetAllUsers_FullMethodName         = "/user.UserService/GetAllUsers"
+	UserService_ValidateUserAddress_FullMethodName = "/user.UserService/ValidateUserAddress"
 )
 
 // UserServiceClient is the client API for UserService service.
@@ -53,6 +54,7 @@ type UserServiceClient interface {
 	EditAddress(ctx context.Context, in *EditAddressRequest, opts ...grpc.CallOption) (*EditAddressResponse, error)
 	DeleteAddress(ctx context.Context, in *DeleteAddressRequest, opts ...grpc.CallOption) (*DeleteAddressResponse, error)
 	GetAllUsers(ctx context.Context, in *GetAllUsersRequest, opts ...grpc.CallOption) (*GetAllUsersResponse, error)
+	ValidateUserAddress(ctx context.Context, in *ValidateUserAddressRequest, opts ...grpc.CallOption) (*ValidateUserAddressResponse, error)
 }
 
 type userServiceClient struct {
@@ -203,6 +205,16 @@ func (c *userServiceClient) GetAllUsers(ctx context.Context, in *GetAllUsersRequ
 	return out, nil
 }
 
+func (c *userServiceClient) ValidateUserAddress(ctx context.Context, in *ValidateUserAddressRequest, opts ...grpc.CallOption) (*ValidateUserAddressResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ValidateUserAddressResponse)
+	err := c.cc.Invoke(ctx, UserService_ValidateUserAddress_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility.
@@ -221,6 +233,7 @@ type UserServiceServer interface {
 	EditAddress(context.Context, *EditAddressRequest) (*EditAddressResponse, error)
 	DeleteAddress(context.Context, *DeleteAddressRequest) (*DeleteAddressResponse, error)
 	GetAllUsers(context.Context, *GetAllUsersRequest) (*GetAllUsersResponse, error)
+	ValidateUserAddress(context.Context, *ValidateUserAddressRequest) (*ValidateUserAddressResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -272,6 +285,9 @@ func (UnimplementedUserServiceServer) DeleteAddress(context.Context, *DeleteAddr
 }
 func (UnimplementedUserServiceServer) GetAllUsers(context.Context, *GetAllUsersRequest) (*GetAllUsersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllUsers not implemented")
+}
+func (UnimplementedUserServiceServer) ValidateUserAddress(context.Context, *ValidateUserAddressRequest) (*ValidateUserAddressResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ValidateUserAddress not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 func (UnimplementedUserServiceServer) testEmbeddedByValue()                     {}
@@ -546,6 +562,24 @@ func _UserService_GetAllUsers_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_ValidateUserAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ValidateUserAddressRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).ValidateUserAddress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_ValidateUserAddress_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).ValidateUserAddress(ctx, req.(*ValidateUserAddressRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -608,6 +642,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAllUsers",
 			Handler:    _UserService_GetAllUsers_Handler,
+		},
+		{
+			MethodName: "ValidateUserAddress",
+			Handler:    _UserService_ValidateUserAddress_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

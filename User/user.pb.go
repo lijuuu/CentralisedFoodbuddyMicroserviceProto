@@ -1639,6 +1639,120 @@ func (x *DeleteAddressResponse) GetMessage() string {
 	return ""
 }
 
+type ValidateUserAddressRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	UserId    string `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
+	AddressId string `protobuf:"bytes,2,opt,name=addressId,proto3" json:"addressId,omitempty"`
+}
+
+func (x *ValidateUserAddressRequest) Reset() {
+	*x = ValidateUserAddressRequest{}
+	mi := &file_User_user_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ValidateUserAddressRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ValidateUserAddressRequest) ProtoMessage() {}
+
+func (x *ValidateUserAddressRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_User_user_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ValidateUserAddressRequest.ProtoReflect.Descriptor instead.
+func (*ValidateUserAddressRequest) Descriptor() ([]byte, []int) {
+	return file_User_user_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *ValidateUserAddressRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *ValidateUserAddressRequest) GetAddressId() string {
+	if x != nil {
+		return x.AddressId
+	}
+	return ""
+}
+
+type ValidateUserAddressResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	IsValid bool     `protobuf:"varint,1,opt,name=isValid,proto3" json:"isValid,omitempty"`
+	Message string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Address *Address `protobuf:"bytes,3,opt,name=address,proto3" json:"address,omitempty"` // Returns the address if valid
+}
+
+func (x *ValidateUserAddressResponse) Reset() {
+	*x = ValidateUserAddressResponse{}
+	mi := &file_User_user_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ValidateUserAddressResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ValidateUserAddressResponse) ProtoMessage() {}
+
+func (x *ValidateUserAddressResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_User_user_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ValidateUserAddressResponse.ProtoReflect.Descriptor instead.
+func (*ValidateUserAddressResponse) Descriptor() ([]byte, []int) {
+	return file_User_user_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *ValidateUserAddressResponse) GetIsValid() bool {
+	if x != nil {
+		return x.IsValid
+	}
+	return false
+}
+
+func (x *ValidateUserAddressResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *ValidateUserAddressResponse) GetAddress() *Address {
+	if x != nil {
+		return x.Address
+	}
+	return nil
+}
+
 var File_User_user_proto protoreflect.FileDescriptor
 
 var file_User_user_proto_rawDesc = []byte{
@@ -1809,8 +1923,21 @@ var file_User_user_proto_rawDesc = []byte{
 	0x73, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75,
 	0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x73, 0x75, 0x63,
 	0x63, 0x65, 0x73, 0x73, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18,
-	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x32, 0xbb,
-	0x07, 0x0a, 0x0b, 0x55, 0x73, 0x65, 0x72, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x3c,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x22, 0x52,
+	0x0a, 0x1a, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x65, 0x55, 0x73, 0x65, 0x72, 0x41, 0x64,
+	0x64, 0x72, 0x65, 0x73, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06,
+	0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73,
+	0x65, 0x72, 0x49, 0x64, 0x12, 0x1c, 0x0a, 0x09, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x49,
+	0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
+	0x49, 0x64, 0x22, 0x7a, 0x0a, 0x1b, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x65, 0x55, 0x73,
+	0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x12, 0x18, 0x0a, 0x07, 0x69, 0x73, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x08, 0x52, 0x07, 0x69, 0x73, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x6d,
+	0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65,
+	0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x27, 0x0a, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0d, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x2e, 0x41, 0x64,
+	0x64, 0x72, 0x65, 0x73, 0x73, 0x52, 0x07, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x32, 0x97,
+	0x08, 0x0a, 0x0b, 0x55, 0x73, 0x65, 0x72, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x3c,
 	0x0a, 0x09, 0x55, 0x73, 0x65, 0x72, 0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x12, 0x16, 0x2e, 0x75, 0x73,
 	0x65, 0x72, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x52, 0x65, 0x71, 0x75,
 	0x65, 0x73, 0x74, 0x1a, 0x17, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x4c,
@@ -1869,8 +1996,14 @@ var file_User_user_proto_rawDesc = []byte{
 	0x6c, 0x6c, 0x55, 0x73, 0x65, 0x72, 0x73, 0x12, 0x18, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x2e, 0x47,
 	0x65, 0x74, 0x41, 0x6c, 0x6c, 0x55, 0x73, 0x65, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
 	0x74, 0x1a, 0x19, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x2e, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x6c, 0x55,
-	0x73, 0x65, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x03, 0x5a, 0x01,
-	0x2e, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x73, 0x65, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x5a, 0x0a, 0x13,
+	0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x65, 0x55, 0x73, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72,
+	0x65, 0x73, 0x73, 0x12, 0x20, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x2e, 0x56, 0x61, 0x6c, 0x69, 0x64,
+	0x61, 0x74, 0x65, 0x55, 0x73, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x21, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x2e, 0x56, 0x61, 0x6c,
+	0x69, 0x64, 0x61, 0x74, 0x65, 0x55, 0x73, 0x65, 0x72, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x03, 0x5a, 0x01, 0x2e, 0x62, 0x06, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1885,36 +2018,38 @@ func file_User_user_proto_rawDescGZIP() []byte {
 	return file_User_user_proto_rawDescData
 }
 
-var file_User_user_proto_msgTypes = make([]protoimpl.MessageInfo, 28)
+var file_User_user_proto_msgTypes = make([]protoimpl.MessageInfo, 30)
 var file_User_user_proto_goTypes = []any{
-	(*GetAllUsersRequest)(nil),        // 0: user.GetAllUsersRequest
-	(*GetAllUsersResponse)(nil),       // 1: user.GetAllUsersResponse
-	(*UserLoginRequest)(nil),          // 2: user.UserLoginRequest
-	(*UserLoginResponse)(nil),         // 3: user.UserLoginResponse
-	(*UserSignupRequest)(nil),         // 4: user.UserSignupRequest
-	(*UserSignupResponse)(nil),        // 5: user.UserSignupResponse
-	(*Address)(nil),                   // 6: user.Address
-	(*BanUserRequest)(nil),            // 7: user.BanUserRequest
-	(*BanUserResponse)(nil),           // 8: user.BanUserResponse
-	(*UnBanUserRequest)(nil),          // 9: user.UnBanUserRequest
-	(*UnBanUserResponse)(nil),         // 10: user.UnBanUserResponse
-	(*EmailVerificationRequest)(nil),  // 11: user.EmailVerificationRequest
-	(*EmailVerificationResponse)(nil), // 12: user.EmailVerificationResponse
-	(*GetProfileRequest)(nil),         // 13: user.GetProfileRequest
-	(*GetProfileResponse)(nil),        // 14: user.GetProfileResponse
-	(*UpdateProfileRequest)(nil),      // 15: user.UpdateProfileRequest
-	(*UpdateProfileResponse)(nil),     // 16: user.UpdateProfileResponse
-	(*GetUserByTokenRequest)(nil),     // 17: user.GetUserByTokenRequest
-	(*CheckBanRequest)(nil),           // 18: user.CheckBanRequest
-	(*CheckBanResponse)(nil),          // 19: user.CheckBanResponse
-	(*AddAddressRequest)(nil),         // 20: user.AddAddressRequest
-	(*AddAddressResponse)(nil),        // 21: user.AddAddressResponse
-	(*GetAddressesRequest)(nil),       // 22: user.GetAddressesRequest
-	(*GetAddressesResponse)(nil),      // 23: user.GetAddressesResponse
-	(*EditAddressRequest)(nil),        // 24: user.EditAddressRequest
-	(*EditAddressResponse)(nil),       // 25: user.EditAddressResponse
-	(*DeleteAddressRequest)(nil),      // 26: user.DeleteAddressRequest
-	(*DeleteAddressResponse)(nil),     // 27: user.DeleteAddressResponse
+	(*GetAllUsersRequest)(nil),          // 0: user.GetAllUsersRequest
+	(*GetAllUsersResponse)(nil),         // 1: user.GetAllUsersResponse
+	(*UserLoginRequest)(nil),            // 2: user.UserLoginRequest
+	(*UserLoginResponse)(nil),           // 3: user.UserLoginResponse
+	(*UserSignupRequest)(nil),           // 4: user.UserSignupRequest
+	(*UserSignupResponse)(nil),          // 5: user.UserSignupResponse
+	(*Address)(nil),                     // 6: user.Address
+	(*BanUserRequest)(nil),              // 7: user.BanUserRequest
+	(*BanUserResponse)(nil),             // 8: user.BanUserResponse
+	(*UnBanUserRequest)(nil),            // 9: user.UnBanUserRequest
+	(*UnBanUserResponse)(nil),           // 10: user.UnBanUserResponse
+	(*EmailVerificationRequest)(nil),    // 11: user.EmailVerificationRequest
+	(*EmailVerificationResponse)(nil),   // 12: user.EmailVerificationResponse
+	(*GetProfileRequest)(nil),           // 13: user.GetProfileRequest
+	(*GetProfileResponse)(nil),          // 14: user.GetProfileResponse
+	(*UpdateProfileRequest)(nil),        // 15: user.UpdateProfileRequest
+	(*UpdateProfileResponse)(nil),       // 16: user.UpdateProfileResponse
+	(*GetUserByTokenRequest)(nil),       // 17: user.GetUserByTokenRequest
+	(*CheckBanRequest)(nil),             // 18: user.CheckBanRequest
+	(*CheckBanResponse)(nil),            // 19: user.CheckBanResponse
+	(*AddAddressRequest)(nil),           // 20: user.AddAddressRequest
+	(*AddAddressResponse)(nil),          // 21: user.AddAddressResponse
+	(*GetAddressesRequest)(nil),         // 22: user.GetAddressesRequest
+	(*GetAddressesResponse)(nil),        // 23: user.GetAddressesResponse
+	(*EditAddressRequest)(nil),          // 24: user.EditAddressRequest
+	(*EditAddressResponse)(nil),         // 25: user.EditAddressResponse
+	(*DeleteAddressRequest)(nil),        // 26: user.DeleteAddressRequest
+	(*DeleteAddressResponse)(nil),       // 27: user.DeleteAddressResponse
+	(*ValidateUserAddressRequest)(nil),  // 28: user.ValidateUserAddressRequest
+	(*ValidateUserAddressResponse)(nil), // 29: user.ValidateUserAddressResponse
 }
 var file_User_user_proto_depIdxs = []int32{
 	14, // 0: user.GetAllUsersResponse.users:type_name -> user.GetProfileResponse
@@ -1924,39 +2059,42 @@ var file_User_user_proto_depIdxs = []int32{
 	6,  // 4: user.AddAddressRequest.address:type_name -> user.Address
 	6,  // 5: user.GetAddressesResponse.addresses:type_name -> user.Address
 	6,  // 6: user.EditAddressRequest.address:type_name -> user.Address
-	2,  // 7: user.UserService.UserLogin:input_type -> user.UserLoginRequest
-	4,  // 8: user.UserService.UserSignup:input_type -> user.UserSignupRequest
-	11, // 9: user.UserService.VerifyEmail:input_type -> user.EmailVerificationRequest
-	13, // 10: user.UserService.GetProfile:input_type -> user.GetProfileRequest
-	15, // 11: user.UserService.UpdateProfile:input_type -> user.UpdateProfileRequest
-	17, // 12: user.UserService.GetUserByToken:input_type -> user.GetUserByTokenRequest
-	18, // 13: user.UserService.CheckBan:input_type -> user.CheckBanRequest
-	7,  // 14: user.UserService.BanUser:input_type -> user.BanUserRequest
-	9,  // 15: user.UserService.UnBanUser:input_type -> user.UnBanUserRequest
-	20, // 16: user.UserService.AddAddress:input_type -> user.AddAddressRequest
-	22, // 17: user.UserService.GetAddresses:input_type -> user.GetAddressesRequest
-	24, // 18: user.UserService.EditAddress:input_type -> user.EditAddressRequest
-	26, // 19: user.UserService.DeleteAddress:input_type -> user.DeleteAddressRequest
-	0,  // 20: user.UserService.GetAllUsers:input_type -> user.GetAllUsersRequest
-	3,  // 21: user.UserService.UserLogin:output_type -> user.UserLoginResponse
-	5,  // 22: user.UserService.UserSignup:output_type -> user.UserSignupResponse
-	12, // 23: user.UserService.VerifyEmail:output_type -> user.EmailVerificationResponse
-	14, // 24: user.UserService.GetProfile:output_type -> user.GetProfileResponse
-	16, // 25: user.UserService.UpdateProfile:output_type -> user.UpdateProfileResponse
-	14, // 26: user.UserService.GetUserByToken:output_type -> user.GetProfileResponse
-	19, // 27: user.UserService.CheckBan:output_type -> user.CheckBanResponse
-	8,  // 28: user.UserService.BanUser:output_type -> user.BanUserResponse
-	10, // 29: user.UserService.UnBanUser:output_type -> user.UnBanUserResponse
-	21, // 30: user.UserService.AddAddress:output_type -> user.AddAddressResponse
-	23, // 31: user.UserService.GetAddresses:output_type -> user.GetAddressesResponse
-	25, // 32: user.UserService.EditAddress:output_type -> user.EditAddressResponse
-	27, // 33: user.UserService.DeleteAddress:output_type -> user.DeleteAddressResponse
-	1,  // 34: user.UserService.GetAllUsers:output_type -> user.GetAllUsersResponse
-	21, // [21:35] is the sub-list for method output_type
-	7,  // [7:21] is the sub-list for method input_type
-	7,  // [7:7] is the sub-list for extension type_name
-	7,  // [7:7] is the sub-list for extension extendee
-	0,  // [0:7] is the sub-list for field type_name
+	6,  // 7: user.ValidateUserAddressResponse.address:type_name -> user.Address
+	2,  // 8: user.UserService.UserLogin:input_type -> user.UserLoginRequest
+	4,  // 9: user.UserService.UserSignup:input_type -> user.UserSignupRequest
+	11, // 10: user.UserService.VerifyEmail:input_type -> user.EmailVerificationRequest
+	13, // 11: user.UserService.GetProfile:input_type -> user.GetProfileRequest
+	15, // 12: user.UserService.UpdateProfile:input_type -> user.UpdateProfileRequest
+	17, // 13: user.UserService.GetUserByToken:input_type -> user.GetUserByTokenRequest
+	18, // 14: user.UserService.CheckBan:input_type -> user.CheckBanRequest
+	7,  // 15: user.UserService.BanUser:input_type -> user.BanUserRequest
+	9,  // 16: user.UserService.UnBanUser:input_type -> user.UnBanUserRequest
+	20, // 17: user.UserService.AddAddress:input_type -> user.AddAddressRequest
+	22, // 18: user.UserService.GetAddresses:input_type -> user.GetAddressesRequest
+	24, // 19: user.UserService.EditAddress:input_type -> user.EditAddressRequest
+	26, // 20: user.UserService.DeleteAddress:input_type -> user.DeleteAddressRequest
+	0,  // 21: user.UserService.GetAllUsers:input_type -> user.GetAllUsersRequest
+	28, // 22: user.UserService.ValidateUserAddress:input_type -> user.ValidateUserAddressRequest
+	3,  // 23: user.UserService.UserLogin:output_type -> user.UserLoginResponse
+	5,  // 24: user.UserService.UserSignup:output_type -> user.UserSignupResponse
+	12, // 25: user.UserService.VerifyEmail:output_type -> user.EmailVerificationResponse
+	14, // 26: user.UserService.GetProfile:output_type -> user.GetProfileResponse
+	16, // 27: user.UserService.UpdateProfile:output_type -> user.UpdateProfileResponse
+	14, // 28: user.UserService.GetUserByToken:output_type -> user.GetProfileResponse
+	19, // 29: user.UserService.CheckBan:output_type -> user.CheckBanResponse
+	8,  // 30: user.UserService.BanUser:output_type -> user.BanUserResponse
+	10, // 31: user.UserService.UnBanUser:output_type -> user.UnBanUserResponse
+	21, // 32: user.UserService.AddAddress:output_type -> user.AddAddressResponse
+	23, // 33: user.UserService.GetAddresses:output_type -> user.GetAddressesResponse
+	25, // 34: user.UserService.EditAddress:output_type -> user.EditAddressResponse
+	27, // 35: user.UserService.DeleteAddress:output_type -> user.DeleteAddressResponse
+	1,  // 36: user.UserService.GetAllUsers:output_type -> user.GetAllUsersResponse
+	29, // 37: user.UserService.ValidateUserAddress:output_type -> user.ValidateUserAddressResponse
+	23, // [23:38] is the sub-list for method output_type
+	8,  // [8:23] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_User_user_proto_init() }
@@ -1970,7 +2108,7 @@ func file_User_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_User_user_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   28,
+			NumMessages:   30,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

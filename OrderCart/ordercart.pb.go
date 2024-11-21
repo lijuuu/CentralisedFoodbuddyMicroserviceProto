@@ -1563,9 +1563,9 @@ type PlaceOrderByRestIDRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	UserId          string   `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
-	RestaurantId    string   `protobuf:"bytes,2,opt,name=restaurantId,proto3" json:"restaurantId,omitempty"`
-	DeliveryAddress *Address `protobuf:"bytes,3,opt,name=deliveryAddress,proto3" json:"deliveryAddress,omitempty"`
+	UserId            string `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
+	RestaurantId      string `protobuf:"bytes,2,opt,name=restaurantId,proto3" json:"restaurantId,omitempty"`
+	DeliveryAddressId string `protobuf:"bytes,3,opt,name=deliveryAddressId,proto3" json:"deliveryAddressId,omitempty"` // ID of the validated delivery address
 }
 
 func (x *PlaceOrderByRestIDRequest) Reset() {
@@ -1612,11 +1612,11 @@ func (x *PlaceOrderByRestIDRequest) GetRestaurantId() string {
 	return ""
 }
 
-func (x *PlaceOrderByRestIDRequest) GetDeliveryAddress() *Address {
+func (x *PlaceOrderByRestIDRequest) GetDeliveryAddressId() string {
 	if x != nil {
-		return x.DeliveryAddress
+		return x.DeliveryAddressId
 	}
-	return nil
+	return ""
 }
 
 type PlaceOrderByRestIDResponse struct {
@@ -2658,17 +2658,16 @@ var file_OrderCart_ordercart_proto_rawDesc = []byte{
 	0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x64, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x09,
 	0x52, 0x11, 0x69, 0x6e, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74,
 	0x49, 0x64, 0x73, 0x12, 0x18, 0x0a, 0x07, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x73, 0x18, 0x04,
-	0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x73, 0x22, 0x95, 0x01,
+	0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x73, 0x22, 0x85, 0x01,
 	0x0a, 0x19, 0x50, 0x6c, 0x61, 0x63, 0x65, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x42, 0x79, 0x52, 0x65,
 	0x73, 0x74, 0x49, 0x44, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x75,
 	0x73, 0x65, 0x72, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65,
 	0x72, 0x49, 0x64, 0x12, 0x22, 0x0a, 0x0c, 0x72, 0x65, 0x73, 0x74, 0x61, 0x75, 0x72, 0x61, 0x6e,
 	0x74, 0x49, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x72, 0x65, 0x73, 0x74, 0x61,
-	0x75, 0x72, 0x61, 0x6e, 0x74, 0x49, 0x64, 0x12, 0x3c, 0x0a, 0x0f, 0x64, 0x65, 0x6c, 0x69, 0x76,
-	0x65, 0x72, 0x79, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b,
-	0x32, 0x12, 0x2e, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x63, 0x61, 0x72, 0x74, 0x2e, 0x41, 0x64, 0x64,
-	0x72, 0x65, 0x73, 0x73, 0x52, 0x0f, 0x64, 0x65, 0x6c, 0x69, 0x76, 0x65, 0x72, 0x79, 0x41, 0x64,
-	0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0x92, 0x01, 0x0a, 0x1a, 0x50, 0x6c, 0x61, 0x63, 0x65, 0x4f,
+	0x75, 0x72, 0x61, 0x6e, 0x74, 0x49, 0x64, 0x12, 0x2c, 0x0a, 0x11, 0x64, 0x65, 0x6c, 0x69, 0x76,
+	0x65, 0x72, 0x79, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x49, 0x64, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x11, 0x64, 0x65, 0x6c, 0x69, 0x76, 0x65, 0x72, 0x79, 0x41, 0x64, 0x64, 0x72,
+	0x65, 0x73, 0x73, 0x49, 0x64, 0x22, 0x92, 0x01, 0x0a, 0x1a, 0x50, 0x6c, 0x61, 0x63, 0x65, 0x4f,
 	0x72, 0x64, 0x65, 0x72, 0x42, 0x79, 0x52, 0x65, 0x73, 0x74, 0x49, 0x44, 0x52, 0x65, 0x73, 0x70,
 	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x49, 0x64, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x49, 0x64, 0x12, 0x18,
@@ -2934,48 +2933,47 @@ var file_OrderCart_ordercart_proto_depIdxs = []int32{
 	2,  // 9: ordercart.GetAllCartsResponse.carts:type_name -> ordercart.RestaurantCart
 	1,  // 10: ordercart.IncrementProductQuantityResponse.updatedItem:type_name -> ordercart.CartItem
 	1,  // 11: ordercart.DecrementProductQuantityResponse.updatedItem:type_name -> ordercart.CartItem
-	0,  // 12: ordercart.PlaceOrderByRestIDRequest.deliveryAddress:type_name -> ordercart.Address
-	4,  // 13: ordercart.PlaceOrderByRestIDResponse.order:type_name -> ordercart.Order
-	4,  // 14: ordercart.GetOrderDetailsAllResponse.orders:type_name -> ordercart.Order
-	4,  // 15: ordercart.GetOrderDetailsByIDResponse.order:type_name -> ordercart.Order
-	4,  // 16: ordercart.GetRestaurantOrdersResponse.orders:type_name -> ordercart.Order
-	5,  // 17: ordercart.OrderCartService.AddProductToCart:input_type -> ordercart.AddProductToCartRequest
-	7,  // 18: ordercart.OrderCartService.GetCartItems:input_type -> ordercart.GetCartItemsRequest
-	9,  // 19: ordercart.OrderCartService.GetCartByRestaurant:input_type -> ordercart.GetCartByRestaurantRequest
-	11, // 20: ordercart.OrderCartService.GetAllCarts:input_type -> ordercart.GetAllCartsRequest
-	13, // 21: ordercart.OrderCartService.IncrementProductQuantity:input_type -> ordercart.IncrementProductQuantityRequest
-	15, // 22: ordercart.OrderCartService.DecrementProductQuantity:input_type -> ordercart.DecrementProductQuantityRequest
-	17, // 23: ordercart.OrderCartService.RemoveProductFromCart:input_type -> ordercart.RemoveProductFromCartRequest
-	19, // 24: ordercart.OrderCartService.ClearCart:input_type -> ordercart.ClearCartRequest
-	21, // 25: ordercart.OrderCartService.ValidateCartItems:input_type -> ordercart.ValidateCartItemsRequest
-	23, // 26: ordercart.OrderCartService.PlaceOrderByRestID:input_type -> ordercart.PlaceOrderByRestIDRequest
-	25, // 27: ordercart.OrderCartService.GetOrderDetailsAll:input_type -> ordercart.GetOrderDetailsAllRequest
-	27, // 28: ordercart.OrderCartService.GetOrderDetailsByID:input_type -> ordercart.GetOrderDetailsByIDRequest
-	29, // 29: ordercart.OrderCartService.CancelOrder:input_type -> ordercart.CancelOrderRequest
-	31, // 30: ordercart.OrderCartService.UpdateOrderStatus:input_type -> ordercart.UpdateOrderStatusRequest
-	33, // 31: ordercart.OrderCartService.GetRestaurantOrders:input_type -> ordercart.GetRestaurantOrdersRequest
-	35, // 32: ordercart.OrderCartService.ConfirmOrder:input_type -> ordercart.ConfirmOrderRequest
-	6,  // 33: ordercart.OrderCartService.AddProductToCart:output_type -> ordercart.AddProductToCartResponse
-	8,  // 34: ordercart.OrderCartService.GetCartItems:output_type -> ordercart.GetCartItemsResponse
-	10, // 35: ordercart.OrderCartService.GetCartByRestaurant:output_type -> ordercart.GetCartByRestaurantResponse
-	12, // 36: ordercart.OrderCartService.GetAllCarts:output_type -> ordercart.GetAllCartsResponse
-	14, // 37: ordercart.OrderCartService.IncrementProductQuantity:output_type -> ordercart.IncrementProductQuantityResponse
-	16, // 38: ordercart.OrderCartService.DecrementProductQuantity:output_type -> ordercart.DecrementProductQuantityResponse
-	18, // 39: ordercart.OrderCartService.RemoveProductFromCart:output_type -> ordercart.RemoveProductFromCartResponse
-	20, // 40: ordercart.OrderCartService.ClearCart:output_type -> ordercart.ClearCartResponse
-	22, // 41: ordercart.OrderCartService.ValidateCartItems:output_type -> ordercart.ValidateCartItemsResponse
-	24, // 42: ordercart.OrderCartService.PlaceOrderByRestID:output_type -> ordercart.PlaceOrderByRestIDResponse
-	26, // 43: ordercart.OrderCartService.GetOrderDetailsAll:output_type -> ordercart.GetOrderDetailsAllResponse
-	28, // 44: ordercart.OrderCartService.GetOrderDetailsByID:output_type -> ordercart.GetOrderDetailsByIDResponse
-	30, // 45: ordercart.OrderCartService.CancelOrder:output_type -> ordercart.CancelOrderResponse
-	32, // 46: ordercart.OrderCartService.UpdateOrderStatus:output_type -> ordercart.UpdateOrderStatusResponse
-	34, // 47: ordercart.OrderCartService.GetRestaurantOrders:output_type -> ordercart.GetRestaurantOrdersResponse
-	36, // 48: ordercart.OrderCartService.ConfirmOrder:output_type -> ordercart.ConfirmOrderResponse
-	33, // [33:49] is the sub-list for method output_type
-	17, // [17:33] is the sub-list for method input_type
-	17, // [17:17] is the sub-list for extension type_name
-	17, // [17:17] is the sub-list for extension extendee
-	0,  // [0:17] is the sub-list for field type_name
+	4,  // 12: ordercart.PlaceOrderByRestIDResponse.order:type_name -> ordercart.Order
+	4,  // 13: ordercart.GetOrderDetailsAllResponse.orders:type_name -> ordercart.Order
+	4,  // 14: ordercart.GetOrderDetailsByIDResponse.order:type_name -> ordercart.Order
+	4,  // 15: ordercart.GetRestaurantOrdersResponse.orders:type_name -> ordercart.Order
+	5,  // 16: ordercart.OrderCartService.AddProductToCart:input_type -> ordercart.AddProductToCartRequest
+	7,  // 17: ordercart.OrderCartService.GetCartItems:input_type -> ordercart.GetCartItemsRequest
+	9,  // 18: ordercart.OrderCartService.GetCartByRestaurant:input_type -> ordercart.GetCartByRestaurantRequest
+	11, // 19: ordercart.OrderCartService.GetAllCarts:input_type -> ordercart.GetAllCartsRequest
+	13, // 20: ordercart.OrderCartService.IncrementProductQuantity:input_type -> ordercart.IncrementProductQuantityRequest
+	15, // 21: ordercart.OrderCartService.DecrementProductQuantity:input_type -> ordercart.DecrementProductQuantityRequest
+	17, // 22: ordercart.OrderCartService.RemoveProductFromCart:input_type -> ordercart.RemoveProductFromCartRequest
+	19, // 23: ordercart.OrderCartService.ClearCart:input_type -> ordercart.ClearCartRequest
+	21, // 24: ordercart.OrderCartService.ValidateCartItems:input_type -> ordercart.ValidateCartItemsRequest
+	23, // 25: ordercart.OrderCartService.PlaceOrderByRestID:input_type -> ordercart.PlaceOrderByRestIDRequest
+	25, // 26: ordercart.OrderCartService.GetOrderDetailsAll:input_type -> ordercart.GetOrderDetailsAllRequest
+	27, // 27: ordercart.OrderCartService.GetOrderDetailsByID:input_type -> ordercart.GetOrderDetailsByIDRequest
+	29, // 28: ordercart.OrderCartService.CancelOrder:input_type -> ordercart.CancelOrderRequest
+	31, // 29: ordercart.OrderCartService.UpdateOrderStatus:input_type -> ordercart.UpdateOrderStatusRequest
+	33, // 30: ordercart.OrderCartService.GetRestaurantOrders:input_type -> ordercart.GetRestaurantOrdersRequest
+	35, // 31: ordercart.OrderCartService.ConfirmOrder:input_type -> ordercart.ConfirmOrderRequest
+	6,  // 32: ordercart.OrderCartService.AddProductToCart:output_type -> ordercart.AddProductToCartResponse
+	8,  // 33: ordercart.OrderCartService.GetCartItems:output_type -> ordercart.GetCartItemsResponse
+	10, // 34: ordercart.OrderCartService.GetCartByRestaurant:output_type -> ordercart.GetCartByRestaurantResponse
+	12, // 35: ordercart.OrderCartService.GetAllCarts:output_type -> ordercart.GetAllCartsResponse
+	14, // 36: ordercart.OrderCartService.IncrementProductQuantity:output_type -> ordercart.IncrementProductQuantityResponse
+	16, // 37: ordercart.OrderCartService.DecrementProductQuantity:output_type -> ordercart.DecrementProductQuantityResponse
+	18, // 38: ordercart.OrderCartService.RemoveProductFromCart:output_type -> ordercart.RemoveProductFromCartResponse
+	20, // 39: ordercart.OrderCartService.ClearCart:output_type -> ordercart.ClearCartResponse
+	22, // 40: ordercart.OrderCartService.ValidateCartItems:output_type -> ordercart.ValidateCartItemsResponse
+	24, // 41: ordercart.OrderCartService.PlaceOrderByRestID:output_type -> ordercart.PlaceOrderByRestIDResponse
+	26, // 42: ordercart.OrderCartService.GetOrderDetailsAll:output_type -> ordercart.GetOrderDetailsAllResponse
+	28, // 43: ordercart.OrderCartService.GetOrderDetailsByID:output_type -> ordercart.GetOrderDetailsByIDResponse
+	30, // 44: ordercart.OrderCartService.CancelOrder:output_type -> ordercart.CancelOrderResponse
+	32, // 45: ordercart.OrderCartService.UpdateOrderStatus:output_type -> ordercart.UpdateOrderStatusResponse
+	34, // 46: ordercart.OrderCartService.GetRestaurantOrders:output_type -> ordercart.GetRestaurantOrdersResponse
+	36, // 47: ordercart.OrderCartService.ConfirmOrder:output_type -> ordercart.ConfirmOrderResponse
+	32, // [32:48] is the sub-list for method output_type
+	16, // [16:32] is the sub-list for method input_type
+	16, // [16:16] is the sub-list for extension type_name
+	16, // [16:16] is the sub-list for extension extendee
+	0,  // [0:16] is the sub-list for field type_name
 }
 
 func init() { file_OrderCart_ordercart_proto_init() }

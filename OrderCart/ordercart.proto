@@ -190,7 +190,7 @@ message ValidateCartItemsResponse {
 message PlaceOrderByRestIDRequest {
     string userId = 1;
     string restaurantId = 2;
-    Address deliveryAddress = 3;
+    string deliveryAddressId = 3;  // ID of the validated delivery address
 }
 
 message PlaceOrderByRestIDResponse {

@@ -18,6 +18,7 @@ service UserService {
     rpc EditAddress(EditAddressRequest) returns (EditAddressResponse);
     rpc DeleteAddress(DeleteAddressRequest) returns (DeleteAddressResponse);
     rpc GetAllUsers(GetAllUsersRequest) returns (GetAllUsersResponse);
+    rpc ValidateUserAddress(ValidateUserAddressRequest) returns (ValidateUserAddressResponse);
 }
 
 message GetAllUsersRequest{}
@@ -174,4 +175,15 @@ message DeleteAddressRequest {
 message DeleteAddressResponse {
     bool success = 1;
     string message = 2;
+}
+
+message ValidateUserAddressRequest {
+    string userId = 1;
+    string addressId = 2;
+}
+
+message ValidateUserAddressResponse {
+    bool isValid = 1;
+    string message = 2;
+    Address address = 3;  // Returns the address if valid
 }

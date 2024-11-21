@@ -14,6 +14,7 @@ service RestaurantService{
     rpc GetAllRestaurantWithProducts(GetAllRestaurantAndProductsRequest) returns (GetAllRestaurantWithProductsResponse);
     rpc BanRestaurant(BanRestaurantRequest) returns (BanRestaurantResponse);
     rpc UnbanRestaurant(UnbanRestaurantRequest) returns (UnbanRestaurantResponse);
+    rpc CheckRestaurantBanStatus(CheckRestaurantBanStatusRequest) returns (CheckRestaurantBanStatusResponse); 
 
     //Product
     rpc AddProduct(AddProductRequest) returns (AddProductResponse);
@@ -31,8 +32,15 @@ service RestaurantService{
     
       
 }
+message CheckRestaurantBanStatusRequest {
+    string restaurantId = 1;
+}
 
-// Define messages for RestaurantService methods
+message CheckRestaurantBanStatusResponse {
+    bool isBanned = 1;
+    string reason = 2;
+    string message = 3;
+}
 message EditRestaurantRequest {
     string restaurantId = 1;
     string restaurantName = 2;

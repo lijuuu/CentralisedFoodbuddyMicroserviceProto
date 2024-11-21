@@ -34,6 +34,7 @@ const (
 	OrderCartService_CancelOrder_FullMethodName              = "/ordercart.OrderCartService/CancelOrder"
 	OrderCartService_UpdateOrderStatus_FullMethodName        = "/ordercart.OrderCartService/UpdateOrderStatus"
 	OrderCartService_GetRestaurantOrders_FullMethodName      = "/ordercart.OrderCartService/GetRestaurantOrders"
+	OrderCartService_ConfirmOrder_FullMethodName             = "/ordercart.OrderCartService/ConfirmOrder"
 )
 
 // OrderCartServiceClient is the client API for OrderCartService service.
@@ -59,6 +60,7 @@ type OrderCartServiceClient interface {
 	CancelOrder(ctx context.Context, in *CancelOrderRequest, opts ...grpc.CallOption) (*CancelOrderResponse, error)
 	UpdateOrderStatus(ctx context.Context, in *UpdateOrderStatusRequest, opts ...grpc.CallOption) (*UpdateOrderStatusResponse, error)
 	GetRestaurantOrders(ctx context.Context, in *GetRestaurantOrdersRequest, opts ...grpc.CallOption) (*GetRestaurantOrdersResponse, error)
+	ConfirmOrder(ctx context.Context, in *ConfirmOrderRequest, opts ...grpc.CallOption) (*ConfirmOrderResponse, error)
 }
 
 type orderCartServiceClient struct {
@@ -219,6 +221,16 @@ func (c *orderCartServiceClient) GetRestaurantOrders(ctx context.Context, in *Ge
 	return out, nil
 }
 
+func (c *orderCartServiceClient) ConfirmOrder(ctx context.Context, in *ConfirmOrderRequest, opts ...grpc.CallOption) (*ConfirmOrderResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ConfirmOrderResponse)
+	err := c.cc.Invoke(ctx, OrderCartService_ConfirmOrder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrderCartServiceServer is the server API for OrderCartService service.
 // All implementations must embed UnimplementedOrderCartServiceServer
 // for forward compatibility.
@@ -242,6 +254,7 @@ type OrderCartServiceServer interface {
 	CancelOrder(context.Context, *CancelOrderRequest) (*CancelOrderResponse, error)
 	UpdateOrderStatus(context.Context, *UpdateOrderStatusRequest) (*UpdateOrderStatusResponse, error)
 	GetRestaurantOrders(context.Context, *GetRestaurantOrdersRequest) (*GetRestaurantOrdersResponse, error)
+	ConfirmOrder(context.Context, *ConfirmOrderRequest) (*ConfirmOrderResponse, error)
 	mustEmbedUnimplementedOrderCartServiceServer()
 }
 
@@ -296,6 +309,9 @@ func (UnimplementedOrderCartServiceServer) UpdateOrderStatus(context.Context, *U
 }
 func (UnimplementedOrderCartServiceServer) GetRestaurantOrders(context.Context, *GetRestaurantOrdersRequest) (*GetRestaurantOrdersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRestaurantOrders not implemented")
+}
+func (UnimplementedOrderCartServiceServer) ConfirmOrder(context.Context, *ConfirmOrderRequest) (*ConfirmOrderResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ConfirmOrder not implemented")
 }
 func (UnimplementedOrderCartServiceServer) mustEmbedUnimplementedOrderCartServiceServer() {}
 func (UnimplementedOrderCartServiceServer) testEmbeddedByValue()                          {}
@@ -588,6 +604,24 @@ func _OrderCartService_GetRestaurantOrders_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrderCartService_ConfirmOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConfirmOrderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderCartServiceServer).ConfirmOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderCartService_ConfirmOrder_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderCartServiceServer).ConfirmOrder(ctx, req.(*ConfirmOrderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OrderCartService_ServiceDesc is the grpc.ServiceDesc for OrderCartService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -654,6 +688,10 @@ var OrderCartService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetRestaurantOrders",
 			Handler:    _OrderCartService_GetRestaurantOrders_Handler,
+		},
+		{
+			MethodName: "ConfirmOrder",
+			Handler:    _OrderCartService_ConfirmOrder_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

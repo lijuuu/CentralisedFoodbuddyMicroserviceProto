@@ -23,6 +23,7 @@ service OrderCartService {
     rpc CancelOrder(CancelOrderRequest) returns (CancelOrderResponse);
     rpc UpdateOrderStatus(UpdateOrderStatusRequest) returns (UpdateOrderStatusResponse);
     rpc GetRestaurantOrders(GetRestaurantOrdersRequest) returns (GetRestaurantOrdersResponse);
+    rpc ConfirmOrder(ConfirmOrderRequest) returns (ConfirmOrderResponse);
 }
 
 // Address message
@@ -260,4 +261,15 @@ message GetRestaurantOrdersResponse {
     string message = 2;
     int32 totalOrders = 3;
     double totalAmount = 4;
+}
+
+message ConfirmOrderRequest {
+    string orderId = 1;
+    string restaurantId = 2;  // For authorization
+}
+
+message ConfirmOrderResponse {
+    bool success = 1;
+    string message = 2;
+    string orderStatus = 3;
 }

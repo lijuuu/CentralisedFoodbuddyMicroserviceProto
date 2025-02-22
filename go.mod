@@ -1,4 +1,4 @@
-module github.com/liju-github/CentralisedFoodbuddyMicroserviceProto
+module github.com/lijuuu/CentralisedFoodbuddyMicroserviceProto
 
 go 1.22.7
 
